@@ -34,12 +34,17 @@ wget -c https://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr19.fa.gz
 ```
 
 ## Concatenando os arquivos .fa.gz
+
+O output esperado será o arquivo hg19.fa criado. 
+
 > O zcat lê arquivos compactados .gz e zip
 ```bash
 zcat chr13.fa.gz chr19.fa.gz | sed -e "s/chr//g" > hg19.fa
 ```
 
 ## Gerando o index do arquivo hg19.fa
+
+O output esperado será o arquivo hg19.fa.fai criado.
 ````bash
 samtools faidx hg19.fa
 ````
@@ -53,12 +58,16 @@ cat hg19.fa.fai
 
 19 | 59128983  | 117473284 | 50 | 51
 
-## Criando o hg19.dict
+## Criando o dicionário da referência
+
+O output esperado será o arquivo hg19.dict criado. 
 ````bash
 ./gatk-4.2.2.0/gatk CreateSequenceDictionary -R hg19.fa -O hg19.dict
 ````
 
-## Criando o hg19 intervals
+## Criando os intervalos 
+
+O output esperado será o arquivo hg19.interval_list criado.
 ````bash
 ./gatk-4.2.2.0/gatk ScatterIntervalsByNs \
 -R hg19.fa \

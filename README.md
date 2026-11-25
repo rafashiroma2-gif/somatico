@@ -39,7 +39,7 @@ wget -c https://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr19.fa.gz
 zcat chr13.fa.gz chr19.fa.gz | sed -e "s/chr//g" > hg19.fa
 ```
 
-## Gerar o index do arquivo hg19.fa
+## Gerando o index do arquivo hg19.fa
 ````bash
 samtools faidx hg19.fa
 ````

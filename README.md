@@ -77,7 +77,7 @@ WP191
 WP018
 
 ## Chamando as variantes com Mutect2
-### Amostras wp190 (tumor) e wp 191 (normal) 
+### Amostras WP190 (tumor) e WP191 (normal) 
 ```bash
 ./gatk-4.2.2.0/gatk Mutect2 \
 -R hg19.fa \
@@ -89,7 +89,7 @@ WP018
 -L hg19.interval_list
 ````
 
-### Amostras wp017 (tumor ) e wp018 (normal)
+### Amostras WP017 (tumor ) e WP018 (normal)
 ````bash
 ./gatk-4.2.2.0/gatk Mutect2 \
 -R hg19.fa \
@@ -101,7 +101,7 @@ WP018
 -L hg19.interval_list
 ````
 
-## Calculando a contaminação Tumor wp190 e wp017
+## Calculando a contaminação Tumor WP190 e WP017
 ````bash
 ./gatk-4.2.2.0/gatk GetPileupSummaries \
 -I tumor_wp190.bam \
@@ -119,7 +119,7 @@ WP018
 ````
 
 
-## Normais wpWP191 e wp018
+## Normais WP191 e WP018
 ````bash
 ./gatk-4.2.2.0/gatk GetPileupSummaries \
 -I tumor_wp191.bam \
@@ -149,8 +149,9 @@ WP018
 -matched tumor_wp018.table \
 -O contamination_wp017-wp018.table
 ````
-````bash
+
 ## FilterMutectCalls
+````bash
 ./gatk-4.2.2.0/gatk FilterMutectCalls \
 -R hg19.fa \
 -V wp190-somatic.vcf.gz \

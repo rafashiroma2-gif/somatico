@@ -77,6 +77,7 @@ WP191
 WP018
 
 ## Chamando as variantes com Mutect2
+### Amostras wp190 (tumor) e wp 191 (normal) 
 ```bash
 ./gatk-4.2.2.0/gatk Mutect2 \
 -R hg19.fa \
@@ -88,6 +89,7 @@ WP018
 -L hg19.interval_list
 ````
 
+### Amostras wp017 (tumor ) e wp018 (normal)
 ````bash
 ./gatk-4.2.2.0/gatk Mutect2 \
 -R hg19.fa \

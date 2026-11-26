@@ -68,7 +68,7 @@ O output esperado será o arquivo hg19.dict criado.
 
 ## Criando os intervalos 
 
-O output esperado será o arquivo hg19.interval_list criado.
+O output esperado será o arquivo hg19.interval_list criado, excluindo as regiões de N.
 ````bash
 ./gatk-4.2.2.0/gatk ScatterIntervalsByNs \
 -R hg19.fa \
@@ -84,6 +84,7 @@ samtools view -H tumor_wp018.bam | grep RG | cut -f6 | sed -e "s/SM://g"
 
 ## Output esperado
 WP191
+
 WP018
 
 ## Chamando as variantes com Mutect2
@@ -111,7 +112,12 @@ WP018
 -L hg19.interval_list
 ````
 
-## Calculando a contaminação Tumor WP190 e WP017
+## Calculando a contaminação e gerando uma tabela
+
+> Aqui ele analisa e compara os alelos observados com o banco de dados gnomAD.
+
+### --> GetPileupSummaries
+### Tumor WP190 e WP017
 ````bash
 ./gatk-4.2.2.0/gatk GetPileupSummaries \
 -I tumor_wp190.bam \
@@ -128,8 +134,7 @@ WP018
 -O tumor_wp017.table
 ````
 
-
-## Normais WP191 e WP018
+### Normais WP191 e WP018
 ````bash
 ./gatk-4.2.2.0/gatk GetPileupSummaries \
 -I tumor_wp191.bam \
@@ -146,7 +151,10 @@ WP018
 -O tumor_wp018.table
 ````
 
-## Calculate contamination
+### --> CalculateContamination
+
+> Aqui ele calcula uma fração estimada de contaminação.
+ 
 ````bash
 ./gatk-4.2.2.0/gatk CalculateContamination \
 -I tumor_wp190.table \
@@ -159,8 +167,13 @@ WP018
 -matched tumor_wp018.table \
 -O contamination_wp017-wp018.table
 ````
+## Criando o filtro 
 
-## FilterMutectCalls
+### FilterMutectCalls
+
+> Aqui ele cria uma coluna de FILTER no VCF com PASS ou o motivo da filtragem.
+
+### Amostras WP190 (tumor) e WP191 (normal) 
 ````bash
 ./gatk-4.2.2.0/gatk FilterMutectCalls \
 -R hg19.fa \
@@ -168,6 +181,8 @@ WP018
 --contamination-table contamination_wp190-wp191.table \
 -O wp190-wp191-filtered.vcf.gz
 ````
+### Amostras WP017 (tumor ) e WP018 (normal)
+
 ````bash
 ./gatk-4.2.2.0/gatk FilterMutectCalls \
 -R hg19.fa \
@@ -181,9 +196,18 @@ WP018
 zcat wp190-wp191-filtered.vcf.gz | grep -v "\#" | wc -l 
 zcat wp017-wp018-filtered.vcf.gz | grep -v "\#" | wc -l
 ```
+## Output esperado
+5
+
+3
 
 ## Conferindo com PASS
 ```bash
 zcat wp190-wp191-filtered.vcf.gz | grep -v "\#" | grep PASS | wc -l 
 zcat wp017-wp018-filtered.vcf.gz | grep -v "\#" | grep PASS | wc -l
 ```
+
+## Output esperado
+2
+
+1
